@@ -199,6 +199,9 @@ class CalPDFDialog(QDialog):
         form.setHorizontalSpacing(18)
         form.setVerticalSpacing(8)
         form.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
+        # Some styles size fields to their hint, which wraps the file path
+        # early and clips the rest. The values should use the whole width.
+        form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
         self._info_rows: dict[str, QLabel] = {}
         for key, label in (
             ("file", "File"),

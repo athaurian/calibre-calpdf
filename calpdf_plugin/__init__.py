@@ -15,7 +15,7 @@ class CalPDFPlugin(InterfaceActionBase):
     )
     supported_platforms = ["windows", "osx", "linux"]
     author = "Athaurian"
-    version = (0, 2, 0)
+    version = (0, 2, 1)
     minimum_calibre_version = (6, 0, 0)
     actual_plugin = "calibre_plugins.calpdf.action:CalPDFAction"
 
