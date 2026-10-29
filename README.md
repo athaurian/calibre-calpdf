@@ -1,37 +1,89 @@
-# calibre-calpdf
+<div align="center">
+  <img src="docs/screenshots/icon.png" alt="CalPDF icon" width="64">
 
-A Calibre interface plugin for [calpdf](https://github.com/athaurian/calpdf).
-It works on the PDF of the selected book without leaving the library.
+# CalPDF
 
-- **Info**: pages, page size, file size, PDF version, and bookmark counts.
-- **Cover**: download one by ASIN or ISBN, or pick an image, then replace the
-  first page or prepend a new one.
-- **Contents**: edit the PDF outline as a tree, and import or export it as JSON.
-- **Optimize**: run qpdf with optional color-profile stripping.
-- **Backup**: inspect and restore the `.bak` copy that calpdf keeps.
+</div>
 
-Every change goes through calpdf, so the in-place safety behavior is the same
-as the command line. The first write saves `<book>.pdf.bak` next to the PDF.
+Hi. CalPDF puts [calpdf](https://github.com/athaurian/calpdf) inside Calibre.
+You can replace covers, edit bookmarks, run `qpdf`, and restore backups,
+exactly as you would on the command line.
 
-## Requirements
+It delegates all PDF handling to calpdf's own code instead of reimplementing it.
+
+## Tabs
+
+![The Info tab](docs/screenshots/info.png)
+
+The **Info** tab shows you the page count, page size, file size, PDF version, bookmark
+count, and whether a backup exists. Nothing on this tab changes the file.
+
+![The Cover tab](docs/screenshots/cover.png)
+
+The **Cover** tab lets you download a cover by ASIN or ISBN, or pick an image
+from disk. You can replace the first page or prepend a new cover page, and you
+see a preview before you apply it. Downloading a cover needs a network
+connection and an ASIN or ISBN that the cover service knows about. The lookup
+code is in [dlcover.py](https://github.com/athaurian/calpdf/blob/main/src/calpdf/dlcover.py).
+
+![The CalPDF dialog, on the Contents tab](docs/screenshots/contents.png)
+
+The **Contents** tab shows the PDF's outline as a tree. You can rename a title,
+change its page, add or remove entries, and move them up or down. Import and
+export use the same ToC JSON format as the `calpdf export-toc` and
+`calpdf apply-toc` commands.
+
+The **Optimize** tab runs `qpdf` on the PDF for you. It has two options
+(both are off by default): (1) stripping ICC color profiles, and (2) **Keep the document
+metadata**. With the second one off, you lose the title and author, so enable it
+if you want to keep them. Note that optimizing usually makes a PDF smaller, but a file
+that is already well optimized can grow a little, because `qpdf` adds
+linearization data.
+
+The **Backup** tab shows you the `.bak` copy calpdf keeps and lets you put it
+back.
+
+## Backup behavior
+
+When you change anything for the first time, calpdf saves a `.bak` copy next to
+the PDF and leaves it alone after that. A cover, a bookmark edit, and an
+optimization all share that one backup. **Restore from backup** puts the copy
+back over the PDF and deletes it, the same way `calpdf restore` does.
+
+If you close the dialog without applying anything, the PDF is untouched.
+
+## Prerequisites
 
 - Calibre 6 or newer.
-- [calpdf](https://github.com/athaurian/calpdf) 0.2 or newer, importable by
-  Calibre's Python. The plugin checks this and tells you when it is missing.
+- [calpdf](https://github.com/athaurian/calpdf) 0.2 or newer, installed where
+  Calibre can import it. If Calibre cannot find calpdf, the plugin tells you
+  what is wrong.
 - `qpdf` on `PATH` for the Optimize tab.
+
+Calibre imports calpdf from the Python installation it runs on, so installing
+calpdf using `uv tool install` will not help. On Arch, you can install
+`calpdf-git` from my
+[Forge repository](https://github.com/athaurian/forge), and it goes into the
+system Python that Calibre uses. Elsewhere, install calpdf into the same Python
+installation.
+
+I use CalPDF on Linux. On Windows and macOS, Calibre bundles its own Python,
+and I have not covered how to install calpdf into it yet.
 
 ## Install
 
 ```bash
+git clone https://github.com/athaurian/calibre-calpdf.git
+cd calibre-calpdf
 make build
 calibre-customize -a dist/calpdf.zip
 ```
 
-Then restart Calibre and add the **CalPDF** button from
-*Preferences → Interface → Toolbars & menus*. A shortcut can be assigned under
-*Preferences → Shortcuts*.
+Restart Calibre, then add the **CalPDF** button from
+_Preferences → Interface → Toolbars & menus_. You can set a shortcut under
+_Preferences → Shortcuts_.
 
-To remove it:
+To remove the plugin:
 
 ```bash
 make uninstall
@@ -43,16 +95,16 @@ make uninstall
 make venv     # uses the system calpdf, pikepdf, and Qt
 make test
 make lint
-make ui       # renders build/ui/*.png offscreen
+make ui       # renders docs/screenshots/*.png offscreen
 ```
 
-The tests run against `../calpdf/src` so they exercise the checkout rather
-than whatever calpdf is installed. Point `CALPDF_SRC` elsewhere if your
-checkouts are arranged differently.
+The tests run against the checkout at `../calpdf/src`, not whatever copy of
+calpdf you have installed. Point `CALPDF_SRC` elsewhere if your checkouts are
+arranged differently.
 
 `build.py` zips `calpdf_plugin/` with `plugin-import-name-calpdf.txt` at the
-root, which is what makes Calibre load it as `calibre_plugins.calpdf`.
+root. That file tells Calibre to load the plugin as `calibre_plugins.calpdf`.
 
 ## License
 
-MIT
+Released under the MIT license. See [LICENSE](LICENSE) for the full text.
