@@ -220,8 +220,9 @@ class CalPDFDialog(QDialog):
 
         layout.addWidget(
             _hint(
-                "calpdf keeps a .bak copy the first time it changes a PDF. "
-                "The Backup tab restores it."
+                "This tab only reads the PDF and never writes to it. If calpdf "
+                "has already modified the file, the Backup row shows the copy "
+                "it saved."
             )
         )
         layout.addStretch(1)
@@ -368,7 +369,11 @@ class CalPDFDialog(QDialog):
 
         footer = QHBoxLayout()
         footer.addWidget(
-            _hint("Double-click a title or page to edit it. Apply saves a .bak first."),
+            _hint(
+                "Double-click a title or page to edit it. The first time calpdf "
+                "modifies a PDF, it saves the original as a separate .bak file. "
+                "Go to the Backup tab to restore it."
+            ),
             1,
         )
         self.toc_apply_button = QPushButton("Apply bookmarks", page)
@@ -397,8 +402,10 @@ class CalPDFDialog(QDialog):
         group_layout.setSpacing(8)
         group_layout.addWidget(
             _hint(
-                "Linearizes the file and recompresses its streams. "
-                "Images are optimized losslessly. The first run keeps a .bak."
+                "qpdf linearizes the file and recompresses its streams, and "
+                "images are optimized without losing quality. The first time "
+                "calpdf modifies a PDF, it saves the original as a separate "
+                ".bak file."
             )
         )
         self.optimize_strip = QCheckBox("Strip ICC color profiles", group)
@@ -444,8 +451,9 @@ class CalPDFDialog(QDialog):
 
         layout.addWidget(
             _hint(
-                "Restoring copies the backup over the PDF and deletes the "
-                "backup, exactly like running calpdf restore."
+                "The first time calpdf modifies a PDF, it saves the original as "
+                "a separate .bak file. Restoring puts that copy back over the "
+                "PDF and deletes it, exactly like running calpdf restore."
             )
         )
         layout.addStretch(1)
