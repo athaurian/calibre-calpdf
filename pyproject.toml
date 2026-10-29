@@ -1,0 +1,21 @@
+[project]
+name = "calibre-calpdf"
+version = "0.1.0"
+description = "A Calibre interface plugin for the calpdf PDF toolkit"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+
+[dependency-groups]
+dev = ["pytest", "ruff"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
