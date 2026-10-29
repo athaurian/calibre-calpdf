@@ -8,8 +8,8 @@ from calibre.gui2 import error_dialog, gprefs
 from calibre.gui2.actions import InterfaceAction
 from calibre.utils.logging import default_log
 
-from .dialog import Book, CalPDFDialog
 from .icons import calpdf_icon
+from .requirements import calpdf_problem
 
 PLUGIN_TITLE = "CalPDF"
 
@@ -43,6 +43,11 @@ class CalPDFAction(InterfaceAction):
     # ------------------------------------------------------------------
 
     def show_dialog(self) -> None:
+        problem = calpdf_problem()
+        if problem:
+            error_dialog(self.gui, "CalPDF needs calpdf", problem, show=True)
+            return
+
         book_id = self._selected_book_id()
         if book_id is None:
             return
@@ -57,6 +62,8 @@ class CalPDFAction(InterfaceAction):
                 show=True,
             )
             return
+
+        from .dialog import Book, CalPDFDialog
 
         authors = db.field_for("authors", book_id) or ()
         identifiers = db.field_for("identifiers", book_id) or {}

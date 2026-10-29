@@ -121,8 +121,8 @@ def test_restore_without_a_backup_reports_it(pdf):
 def test_optimize_reports_the_size_change(pdf):
     result = backend.optimize_pdf(pdf)
 
-    assert result["before"] > 0
-    assert result["after"] > 0
+    assert result.before > 0
+    assert result.after > 0
     assert page_count(pdf) == 3
     assert backend.backup_for(pdf).is_file()
 

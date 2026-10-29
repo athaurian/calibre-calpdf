@@ -824,13 +824,11 @@ class CalPDFDialog(QDialog):
         self._run("Optimizing with qpdf…", task, self._optimized)
 
     def _optimized(self, result) -> None:
-        self.optimize_result.setText(
-            f"{format_size_change(result['before'], result['after'])}"
-        )
+        self.optimize_result.setText(format_size_change(result.before, result.after))
         message = "Optimized."
-        if result["warnings"]:
-            message = "Optimized with qpdf warnings. See the details below."
-            self.optimize_result.setToolTip(result["warnings"])
+        if result.stderr:
+            message = "Optimized, with qpdf warnings. See the details below."
+            self.optimize_result.setToolTip(result.stderr)
         self._after_change(message)
 
     def _restore(self) -> None:

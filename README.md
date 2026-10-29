@@ -16,7 +16,8 @@ as the command line. The first write saves `<book>.pdf.bak` next to the PDF.
 ## Requirements
 
 - Calibre 6 or newer.
-- [calpdf](https://github.com/athaurian/calpdf) importable by Calibre's Python.
+- [calpdf](https://github.com/athaurian/calpdf) 0.2 or newer, importable by
+  Calibre's Python. The plugin checks this and tells you when it is missing.
 - `qpdf` on `PATH` for the Optimize tab.
 
 ## Install
@@ -39,11 +40,15 @@ make uninstall
 ## Development
 
 ```bash
-make venv     # uses the system calpdf and pikepdf
+make venv     # uses the system calpdf, pikepdf, and Qt
 make test
 make lint
 make ui       # renders build/ui/*.png offscreen
 ```
+
+The tests run against `../calpdf/src` so they exercise the checkout rather
+than whatever calpdf is installed. Point `CALPDF_SRC` elsewhere if your
+checkouts are arranged differently.
 
 `build.py` zips `calpdf_plugin/` with `plugin-import-name-calpdf.txt` at the
 root, which is what makes Calibre load it as `calibre_plugins.calpdf`.

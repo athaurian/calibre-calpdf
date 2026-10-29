@@ -2,6 +2,7 @@
 
 PY := .venv/bin/python
 ZIP := dist/calpdf.zip
+CALPDF_SRC ?= ../calpdf/src
 
 venv:
 	uv venv --allow-existing --system-site-packages --python python3 .venv
@@ -17,7 +18,7 @@ uninstall:
 	calibre-customize -r CalPDF
 
 test: venv
-	$(PY) -m pytest -q
+	PYTHONPATH=$(CALPDF_SRC) $(PY) -m pytest -q
 
 lint: venv
 	$(PY) -m ruff check .
@@ -28,7 +29,7 @@ format: venv
 	$(PY) -m ruff format .
 
 ui: venv
-	$(PY) tools/screenshot.py
+	PYTHONPATH=$(CALPDF_SRC) $(PY) tools/screenshot.py
 
 clean:
 	rm -rf build dist .pytest_cache .ruff_cache
