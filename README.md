@@ -52,7 +52,7 @@ if you want to keep them. Note that optimizing usually makes a PDF smaller, but 
 that is already well optimized can grow a little, because `qpdf` adds
 linearization data.
 
-The **Backup** tab shows you the `.bak` copy calpdf keeps and lets you put it
+Finally, the **Backup** tab shows you the `.bak` copy calpdf keeps and lets you put it
 back.
 
 ## Backup behavior
