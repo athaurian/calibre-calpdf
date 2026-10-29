@@ -13,12 +13,16 @@ It delegates all PDF handling to calpdf's own code instead of reimplementing it.
 
 ## Tabs
 
-![The Info tab](docs/screenshots/info.png)
+<p align="center">
+  <img src="docs/screenshots/info.png" alt="The Info tab" width="576">
+</p>
 
 The **Info** tab shows you the page count, page size, file size, PDF version, bookmark
 count, and whether a backup exists. Nothing on this tab changes the file.
 
-![The Cover tab](docs/screenshots/cover.png)
+<p align="center">
+  <img src="docs/screenshots/cover.png" alt="The Cover tab" width="576">
+</p>
 
 The **Cover** tab lets you download a cover by ASIN or ISBN, or pick an image
 from disk. You can replace the first page or prepend a new cover page, and you
@@ -26,7 +30,9 @@ see a preview before you apply it. Downloading a cover needs a network
 connection and an ASIN or ISBN that the cover service knows about. The lookup
 code is in [dlcover.py](https://github.com/athaurian/calpdf/blob/main/src/calpdf/dlcover.py).
 
-![The CalPDF dialog, on the Contents tab](docs/screenshots/contents.png)
+<p align="center">
+  <img src="docs/screenshots/contents.png" alt="The CalPDF dialog, on the Contents tab" width="576">
+</p>
 
 The **Contents** tab shows the PDF's outline as a tree. You can rename a title,
 change its page, add or remove entries, and move them up or down. Import and
