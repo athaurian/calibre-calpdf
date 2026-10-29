@@ -20,6 +20,8 @@ It delegates all PDF handling to calpdf's own code instead of reimplementing it.
 The **Info** tab shows you the page count, page size, file size, PDF version, bookmark
 count, and whether a backup exists. Nothing on this tab changes the file.
 
+---
+
 <p align="center">
   <img src="docs/screenshots/cover.png" alt="The Cover tab" width="576">
 </p>
@@ -30,6 +32,8 @@ see a preview before you apply it. Downloading a cover needs a network
 connection and an ASIN or ISBN that the cover service knows about. The lookup
 code is in [dlcover.py](https://github.com/athaurian/calpdf/blob/main/src/calpdf/dlcover.py).
 
+---
+
 <p align="center">
   <img src="docs/screenshots/contents.png" alt="The CalPDF dialog, on the Contents tab" width="576">
 </p>
@@ -38,6 +42,8 @@ The **Contents** tab shows the PDF's outline as a tree. You can rename a title,
 change its page, add or remove entries, and move them up or down. Import and
 export use the same ToC JSON format as the `calpdf export-toc` and
 `calpdf apply-toc` commands.
+
+---
 
 The **Optimize** tab runs `qpdf` on the PDF for you. It has two options
 (both are off by default): (1) stripping ICC color profiles, and (2) **Keep the document
