@@ -6,7 +6,7 @@ from PyQt6.QtGui import QColor, QIcon, QPainter, QPainterPath, QPen, QPixmap
 
 def calpdf_icon() -> QIcon:
     icon = QIcon()
-    for size in (16, 22, 24, 32, 48, 64):
+    for size in (16, 22, 24, 32, 48, 64, 128, 256):
         icon.addPixmap(_pixmap(size))
     return icon
 
