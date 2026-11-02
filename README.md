@@ -17,8 +17,9 @@ It delegates all PDF handling to calpdf's own code instead of reimplementing it.
   <img src="docs/screenshots/info.png" alt="The Info tab" width="576">
 </p>
 
-The **Info** tab shows you the page count, page size, file size, PDF version, bookmark
-count, and whether a backup exists. Nothing on this tab changes the file.
+The **Info** tab shows you the page count, page size, file size, PDF version,
+bookmark count, and whether a backup exists. Nothing on this tab changes the
+file.
 
 ---
 
@@ -29,8 +30,7 @@ count, and whether a backup exists. Nothing on this tab changes the file.
 The **Cover** tab lets you download a cover by ASIN or ISBN, or pick an image
 from disk. You can replace the first page or prepend a new cover page, and you
 see a preview before you apply it. Downloading a cover needs a network
-connection and an ASIN or ISBN that the cover service knows about. The lookup
-code is in [dlcover.py](https://github.com/athaurian/calpdf/blob/main/src/calpdf/dlcover.py).
+connection and an ASIN or ISBN that the cover service knows about.
 
 ---
 
@@ -45,15 +45,15 @@ export use the same ToC JSON format as the `calpdf export-toc` and
 
 ---
 
-The **Optimize** tab runs `qpdf` on the PDF for you. It has two options
-(both are off by default): (1) stripping ICC color profiles, and (2) **Keep the document
-metadata**. With the second one off, you lose the title and author, so enable it
-if you want to keep them. Note that optimizing usually makes a PDF smaller, but a file
-that is already well optimized can grow a little, because `qpdf` adds
-linearization data.
+The **Optimize** tab runs `qpdf` on the PDF for you. It has two options (both
+are off by default): (1) stripping ICC color profiles, and (2) **Keep the
+document metadata**. With the second one off, you lose the title and author, so
+enable it if you want to keep them. Note that optimizing usually makes a PDF
+smaller, but a file that is already well optimized can grow a little, because
+`qpdf` adds linearization data.
 
-Finally, the **Backup** tab shows you the `.bak` copy calpdf keeps and lets you put it
-back.
+Finally, the **Backup** tab shows you the `.bak` copy calpdf keeps and lets you
+put it back.
 
 ## Backup behavior
 
@@ -64,7 +64,7 @@ back over the PDF and deletes it, the same way `calpdf restore` does.
 
 If you close the dialog without applying anything, the PDF is untouched.
 
-## Prerequisites
+## Requirements
 
 - Calibre 6 or newer.
 - [calpdf](https://github.com/athaurian/calpdf) 0.2 or newer, installed where
@@ -84,7 +84,7 @@ and I have not covered how to install calpdf into it yet.
 
 ## Install
 
-```bash
+```sh
 git clone https://github.com/athaurian/calibre-calpdf.git
 cd calibre-calpdf
 make build
@@ -97,13 +97,13 @@ _Preferences → Shortcuts_.
 
 To remove the plugin:
 
-```bash
+```sh
 make uninstall
 ```
 
 ## Development
 
-```bash
+```sh
 make venv     # uses the system calpdf, pikepdf, and Qt
 make test
 make lint
@@ -114,8 +114,8 @@ The tests run against the checkout at `../calpdf/src`, not whatever copy of
 calpdf you have installed. Point `CALPDF_SRC` elsewhere if your checkouts are
 arranged differently.
 
-`build.py` zips `calpdf_plugin/` with `plugin-import-name-calpdf.txt` at the
-root. That file tells Calibre to load the plugin as `calibre_plugins.calpdf`.
+`make build` produces `dist/calpdf.zip`, which Calibre loads as
+`calibre_plugins.calpdf`.
 
 ## License
 
