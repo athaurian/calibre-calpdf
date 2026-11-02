@@ -1,4 +1,4 @@
-"""CalPDF, a Calibre interface plugin for the calpdf toolkit."""
+"""Calibre interface plugin for the calpdf toolkit."""
 
 try:
     from calibre.customize import InterfaceActionBase

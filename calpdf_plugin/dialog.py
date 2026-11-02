@@ -1,4 +1,4 @@
-"""The CalPDF dialog.
+"""CalPDF dialog and its supporting widgets.
 
 The widget layer knows nothing about Calibre. It receives a :class:`Book`
 and a callback, which keeps it renderable from a plain QApplication for
@@ -107,6 +107,8 @@ def _hint(text: str, parent: QWidget | None = None) -> QLabel:
 
 
 class CalPDFDialog(QDialog):
+    """Dialog for viewing and editing one PDF."""
+
     def __init__(
         self,
         book: Book,

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the installable plugin zip.
+"""Installable plugin zip builder.
 
 Calibre derives the plugin module name from a root-level
 plugin-import-name-*.txt file, so the zip is content-addressed by

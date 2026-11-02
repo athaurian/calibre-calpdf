@@ -1,4 +1,7 @@
-"""Toolbar icon drawn at runtime so the plugin carries no image resources."""
+"""Runtime-drawn toolbar icon.
+
+Drawing the icon in code means the plugin carries no image resources.
+"""
 
 from PyQt6.QtCore import QPointF, QRectF, Qt
 from PyQt6.QtGui import QColor, QIcon, QPainter, QPainterPath, QPen, QPixmap

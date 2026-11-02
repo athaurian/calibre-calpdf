@@ -1,4 +1,4 @@
-"""The Calibre action that opens the CalPDF dialog for the selected book."""
+"""Calibre action that opens the CalPDF dialog for the selected book."""
 
 from __future__ import annotations
 

@@ -1,7 +1,7 @@
-"""Calls into calpdf on behalf of the dialog.
+"""calpdf operations and error translation for the dialog.
 
-This module talks to the filesystem and to calpdf only. It does not import
-Qt or Calibre, so the operations stay testable outside a running Calibre.
+The module talks to the filesystem and calpdf only. It does not import Qt or
+Calibre, so the operations stay testable outside a running Calibre.
 """
 
 from __future__ import annotations
@@ -29,7 +29,7 @@ calpdf.output.configure(quiet=True)
 
 
 class OperationError(Exception):
-    """A failure that the dialog can show to the user as-is."""
+    """Raised when a calpdf operation fails with a message fit for the dialog."""
 
 
 @contextmanager
@@ -102,7 +102,11 @@ def validate_entries(entries: list[dict[str, Any]], pages: int) -> None:
 
 
 def write_toc(path: Path, entries: list[dict[str, Any]]) -> int:
-    """Replace the PDF outline. Returns the number of bookmarks written."""
+    """Replace the PDF outline.
+
+    Returns:
+        The number of bookmarks written.
+    """
     with _calpdf_errors():
         return toc_mod.write_toc(path, entries)
 

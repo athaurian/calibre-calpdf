@@ -1,4 +1,4 @@
-"""The calpdf version this plugin needs, and how to report a mismatch."""
+"""calpdf version requirement and mismatch reporting."""
 
 from __future__ import annotations
 

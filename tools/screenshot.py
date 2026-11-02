@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the dialog offscreen for the README and the calpdf documentation."""
+"""Offscreen dialog renderer for the README and calpdf documentation."""
 
 from __future__ import annotations
 
@@ -162,8 +162,8 @@ def main() -> None:
     shutil.copyfile(pdf, backup)
     os.utime(backup, (DEMO_MTIME, DEMO_MTIME))
 
-    # The cover field looks like a real selection without clipping a long
-    # repository path: keep the file name relative to the scratch directory.
+    # The cover field shows the file name without clipping a long repository
+    # path: keep it relative to the scratch directory.
     os.chdir(SCRATCH)
 
     app = QApplication([])
@@ -177,8 +177,8 @@ def main() -> None:
     dialog.cover_file_radio.setChecked(True)
     dialog.cover_file.setText(cover.name)
 
-    # The dialog has read the real file by now. Show an anonymous location in
-    # the screenshots instead of this checkout's home directory.
+    # The dialog has already loaded the file. Show an anonymous location in
+    # the screenshots instead of the local checkout path.
     dialog.subtitle_label.setText(str(DEMO_PATH))
     dialog._info_rows["file"].setText(str(DEMO_PATH))
     dialog.backup_path.setText(DEMO_BACKUP)
