@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="docs/screenshots/icon.png" alt="CalPDF icon" width="64">
+<img src="monogram.svg" alt="CalPDF monogram" width="128">
 
 # CalPDF
 
