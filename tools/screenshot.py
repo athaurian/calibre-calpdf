@@ -19,7 +19,6 @@ from PIL import Image, ImageDraw, ImageFont  # noqa: E402
 from PyQt6.QtWidgets import QApplication  # noqa: E402
 
 from calpdf_plugin.dialog import Book, CalPDFDialog  # noqa: E402
-from calpdf_plugin.icons import calpdf_icon  # noqa: E402
 
 SCRATCH = ROOT / "build" / "ui"
 OUT = ROOT / "docs" / "screenshots"
@@ -191,7 +190,6 @@ def main() -> None:
         name = dialog.tabs.tabText(index).lower()
         dialog.grab().save(str(OUT / f"{name}.png"))
 
-    calpdf_icon().pixmap(128, 128).save(str(OUT / "icon.png"))
     dialog.close()
     print(f"wrote {len(list(OUT.glob('*.png')))} images to {OUT.relative_to(ROOT)}")
 
