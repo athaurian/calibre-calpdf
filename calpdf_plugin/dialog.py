@@ -246,7 +246,7 @@ class CalPDFDialog(QDialog):
         download_row = QHBoxLayout()
         self.cover_download_radio = QRadioButton("Download by identifier", source)
         self.cover_id = QLineEdit(source)
-        self.cover_id.setPlaceholderText("ASIN or ISBN")
+        self.cover_id.setPlaceholderText("ASIN, ISBN, or OLID")
         self.cover_preview_button = QPushButton("Preview", source)
         download_row.addWidget(self.cover_download_radio)
         download_row.addWidget(self.cover_id, 1)
@@ -272,7 +272,7 @@ class CalPDFDialog(QDialog):
         form.setHorizontalSpacing(14)
         form.setVerticalSpacing(8)
         self.cover_mode = QComboBox(placement)
-        self.cover_mode.addItem("Replace the first page(s)", Mode.replace)
+        self.cover_mode.addItem("Replace the first page or pages", Mode.replace)
         self.cover_mode.addItem("Prepend before the first page", Mode.insert)
         self.cover_pages = QSpinBox(placement)
         self.cover_pages.setRange(1, 50)
@@ -404,10 +404,9 @@ class CalPDFDialog(QDialog):
         group_layout.setSpacing(8)
         group_layout.addWidget(
             _hint(
-                "qpdf linearizes the file and recompresses its streams, and "
-                "images are optimized without losing quality. The first time "
-                "calpdf modifies a PDF, it saves the original as a separate "
-                ".bak file."
+                "qpdf linearizes the file, recompresses its streams, and "
+                "recompresses images. The first time calpdf modifies a PDF, "
+                "it saves the original as a separate .bak file."
             )
         )
         self.optimize_strip = QCheckBox("Strip ICC color profiles", group)
@@ -554,7 +553,7 @@ class CalPDFDialog(QDialog):
             self.cover_identifier_hint.setText(f"From this book: {shown}")
         else:
             self.cover_identifier_hint.setText(
-                "This book has no identifiers. Enter an ASIN or ISBN."
+                "This book has no identifiers. Enter an ASIN, ISBN, or OLID."
             )
 
     def _load_toc(self) -> None:
@@ -738,7 +737,7 @@ class CalPDFDialog(QDialog):
 
     def _browse_cover_file(self) -> None:
         path, _ = QFileDialog.getOpenFileName(
-            self, "Choose a cover image", "", "Images (*.png *.jpg *.jpeg *.webp)"
+            self, "Choose a cover image", "", "Images (*.png *.jpg *.jpeg)"
         )
         if path:
             self.cover_file.setText(path)
@@ -766,7 +765,7 @@ class CalPDFDialog(QDialog):
     def _preview_cover(self) -> None:
         book_id = self.cover_id.text().strip()
         if not book_id:
-            self._show_error("Enter an ASIN or ISBN first.")
+            self._show_error("Enter an ASIN, ISBN, or OLID first.")
             return
 
         def task():
@@ -788,7 +787,7 @@ class CalPDFDialog(QDialog):
         image_file = self.cover_file.text().strip()
 
         if download and not book_id:
-            self._show_error("Enter an ASIN or ISBN first.")
+            self._show_error("Enter an ASIN, ISBN, or OLID first.")
             return
         if not download and not image_file:
             self._show_error("Choose an image file first.")
