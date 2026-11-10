@@ -17,7 +17,7 @@ It delegates all PDF handling to calpdf's code.
   <img src="docs/screenshots/info.png" alt="The Info tab" width="576">
 </p>
 
-The **Info** tab shows you the page count, page size, file size, PDF version,
+The **Info** tab shows the page count, page size, file size, PDF version,
 bookmark count, and whether a backup exists. Nothing on this tab changes the
 file.
 
@@ -27,10 +27,10 @@ file.
   <img src="docs/screenshots/cover.png" alt="The Cover tab" width="576">
 </p>
 
-The **Cover** tab lets you download a cover by ASIN, ISBN, or Open Library ID
-(OLID), or pick an image from disk. You can replace the first page or several
-pages, or prepend a new cover page. You can preview a cover before you apply it.
-Downloading a cover needs a network connection.
+The **Cover** tab downloads a cover by ASIN, ISBN, or Open Library ID (OLID), or
+picks an image from disk. The image can replace the first page or several pages,
+or prepend a new cover page. You can preview it before you apply it. Downloading
+a cover needs a network connection.
 
 ---
 
@@ -71,14 +71,14 @@ If you close the dialog without applying anything, the PDF is untouched.
 - `qpdf` on `PATH` for the Optimize tab.
 
 Calibre imports calpdf from the Python installation it runs on, so installing
-calpdf using `uv tool install` will not help. On Arch, you can install
+calpdf using `uv tool install` won't help. On Arch, you can install
 `calpdf-git` from my
 [Forge repository](https://github.com/athaurian/forge), and it goes into the
 system Python that Calibre uses. Elsewhere, install calpdf into the same Python
 installation.
 
 I use CalPDF on Linux. On Windows and macOS, Calibre bundles its own Python,
-and I have not covered how to install calpdf into it yet.
+and I haven't covered how to install calpdf into it yet.
 
 ## Install
 
