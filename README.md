@@ -1,120 +1,91 @@
 <div align="center">
 <img src="monogram.svg" alt="CalPDF monogram" width="128">
 
-# CalPDF
+# CalPDF for Calibre
 
 </div>
 
-Hi. CalPDF puts [calpdf](https://github.com/athaurian/calpdf) inside Calibre.
-You can replace covers, edit bookmarks, run `qpdf`, and restore backups,
-exactly as you would on the command line.
+Hi. CalPDF is a Calibre plugin for [`calpdf`](https://github.com/athaurian/calpdf). (The names are similar because both share the same code.)
 
-It delegates all PDF handling to calpdf's code.
+It lets you inspect PDFs, swap covers, edit bookmarks, optimize file size with `qpdf`, and restore backups with a GUI.
 
 ## Tabs
 
-<p align="center">
-  <img src="docs/screenshots/info.png" alt="The Info tab" width="576">
-</p>
+### Info
 
-The **Info** tab shows the page count, page size, file size, PDF version,
-bookmark count, and whether a backup exists. Nothing on this tab changes the
-file.
+![Info tab](docs/screenshots/info.png)
 
----
+Displays read-only document metadata: page count, page dimensions, file size, PDF version, bookmark count, and whether a `.bak` backup exists.
 
-<p align="center">
-  <img src="docs/screenshots/cover.png" alt="The Cover tab" width="576">
-</p>
+### Cover
 
-The **Cover** tab downloads a cover by ASIN, ISBN, or Open Library ID (OLID), or
-picks an image from disk. The image can replace the first page or several pages,
-or prepend a new cover page. You can preview it before you apply it. Downloading
-a cover needs a network connection.
+![Cover tab](docs/screenshots/cover.png)
 
----
+Replaces cover pages or prepends a new one using a local PNG/JPEG or an image fetched by ASIN, ISBN, or Open Library ID.
 
-<p align="center">
-  <img src="docs/screenshots/contents.png" alt="The CalPDF dialog, on the Contents tab" width="576">
-</p>
+| Control        | Behavior                                                                                                                                                                                                                                                                            |
+| :------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Mode**       | **Replace first page(s)** removes the first `1–50` pages (and any bookmarks or internal links pointing to them) before inserting the cover. **Prepend as new page 1** keeps every existing page intact.                                                                             |
+| **Fit**        | **Match width** scales the image to the target page width and adjusts the page height to match the image's aspect ratio. **Fill and crop** fills the target page dimensions and crops overflowing edges. **Fit inside** centers the full image inside the target page with margins. |
+| **Resolution** | Sets the rendering DPI (`72–1200`, default `300`), used to size the page when no surviving reference page exists.                                                                                                                                                                   |
 
-The **Contents** tab shows the PDF's bookmarks as a tree. You can rename a
-title, change its page, add or remove entries, and move them up or down. Import
-and export use the same JSON format as the `calpdf export-toc` and
-`calpdf apply-toc` commands.
+### Contents
 
----
+![Contents tab](docs/screenshots/contents.png)
 
-The **Optimize** tab compresses the PDF with `qpdf`. It has two options, both
-off by default: **Strip ICC color profiles** and **Keep the document metadata**.
-The second option keeps the title and author, which the default removes.
-Optimizing usually makes a PDF smaller, but a file that is already well
-optimized can grow a little because `qpdf` adds linearization data.
+Edits the PDF's table of contents (bookmark tree) directly or imports and exports them as JSON as `calpdf` would. For more information about the JSON schema, see [ToC JSON format](https://athaurian.github.io/calpdf/reference/toc-json-format/).
 
-The **Backup** tab shows the `.bak` copy and restores it.
+### Optimize
 
-## Backup behavior
+![Optimize tab](docs/screenshots/optimize.png)
 
-The first time calpdf changes a PDF, it saves a `.bak` copy next to the file and
-leaves that copy alone after that. A cover, a bookmark edit, and an optimization
-all share the one backup. **Restore from backup** puts the copy back over the
-PDF and deletes it, the same way `calpdf restore` does.
+Runs stream compression and linearization using `qpdf`.
 
-If you close the dialog without applying anything, the PDF is untouched.
+- **Metadata and accessibility tags**: By default, optimization strips document metadata (such as title and author) and the document structure tree (accessibility tags). Checking **Keep the document metadata** preserves metadata fields, but the structure tree is always removed.
+- **Strip ICC color profiles**: Removes embedded `OutputIntents` and `ICCBased` color spaces to save space when exact color reproduction is unnecessary.
+- **Small files**: Very small PDFs can grow slightly after optimization because `qpdf` adds linearization tables.
+
+### Backup
+
+The plugin shares the same `book.pdf.bak` file as the `calpdf` CLI.
+
+- A backup is created once, right before the first in-place modification.
+- While `book.pdf.bak` exists, subsequent in-place operations read from `.bak` as their source so they always work against the original file rather than compounding edits. To lock in your current PDF as the new baseline before running another tool, delete the backup first.
+- Restoring copies `book.pdf.bak` back over `book.pdf` and deletes `.bak`.
 
 ## Requirements
 
-- Calibre 6 or newer.
-- [calpdf](https://github.com/athaurian/calpdf) 0.2 or newer, installed where
-  Calibre can import it. If the import or version check fails, the plugin shows
-  an error that explains the problem.
-- `qpdf` on `PATH` for the Optimize tab.
+- **Linux only**: Unfortunately, Windows and macOS builds of Calibre bundle a private Python runtime without a supported way to install third-party packages into it.
+- **Calibre 6+**
+- **`qpdf`** on `PATH` (for the **Optimize** tab)
+- **`calpdf` 0.2+ installed in Calibre's Python environment**: Do not install `calpdf` with `uv tool install` if you want to use this plugin. `uv tool install` isolates `calpdf` inside its own virtual environment where Calibre cannot import it. Install `calpdf` into the system Python that Calibre uses (on Arch Linux, install `calpdf-git` from the Forge repository).
 
-Calibre imports calpdf from the Python installation it runs on, so installing
-calpdf using `uv tool install` won't help. On Arch, you can install
-`calpdf-git` from my
-[Forge repository](https://github.com/athaurian/forge), and it goes into the
-system Python that Calibre uses. Elsewhere, install calpdf into the same Python
-installation.
+## Installation
 
-I use CalPDF on Linux. On Windows and macOS, Calibre bundles its own Python,
-and I haven't covered how to install calpdf into it yet.
-
-## Install
-
-```sh
+```bash
 git clone https://github.com/athaurian/calibre-calpdf.git
 cd calibre-calpdf
 make build
 calibre-customize -a dist/calpdf.zip
 ```
 
-Restart Calibre, then add the **CalPDF** button from
-_Preferences → Interface → Toolbars & menus_. You can set a shortcut under
-_Preferences → Shortcuts_.
-
 To remove the plugin:
 
-```sh
+```bash
 make uninstall
 ```
 
 ## Development
 
-```sh
-make venv     # reuses the system pikepdf and Qt
-make test
-make lint
-make ui       # renders docs/screenshots/*.png offscreen
+`make test` expects a sibling checkout of `calpdf` at `../calpdf/src` (override with `CALPDF_SRC=/path/to/calpdf/src`).
+
+```bash
+make venv   # create local test virtualenv
+make test   # run test suite
+make lint   # run Ruff checks
+make ui     # render docs/screenshots/*.png
 ```
-
-The tests run against the checkout at `../calpdf/src`, not whatever copy of
-calpdf you have installed. Point `CALPDF_SRC` elsewhere if your checkouts are
-arranged differently.
-
-`make build` produces `dist/calpdf.zip`, which Calibre loads as
-`calibre_plugins.calpdf`.
 
 ## License
 
-Released under the MIT license. See [LICENSE](LICENSE) for the full text.
+MIT
