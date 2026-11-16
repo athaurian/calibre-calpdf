@@ -41,9 +41,9 @@ Edits the PDF's table of contents (bookmark tree) directly or imports and export
 
 Runs stream compression and linearization using `qpdf`.
 
-- **Metadata and accessibility tags**: By default, optimization strips document metadata (such as title and author) and the document structure tree (accessibility tags). Checking **Keep the document metadata** preserves metadata fields, but the structure tree is always removed.
-- **Strip ICC color profiles**: Removes embedded `OutputIntents` and `ICCBased` color spaces to save space when exact color reproduction is unnecessary.
-- **Small files**: Very small PDFs can grow slightly after optimization because `qpdf` adds linearization tables.
+- **Metadata and accessibility tags:** By default, optimization strips document metadata (such as title and author) and the document structure tree (accessibility tags). Checking **Keep the document metadata** preserves metadata fields, but the structure tree is always removed.
+- **Strip ICC color profiles:** Removes embedded `OutputIntents` and `ICCBased` color spaces to save space when exact color reproduction is unnecessary.
+- **Small files:** Very small PDFs can grow slightly after optimization because `qpdf` adds linearization tables.
 
 ### Backup
 
@@ -55,10 +55,10 @@ The plugin shares the same `book.pdf.bak` file as the `calpdf` CLI.
 
 ## Requirements
 
-- **Linux only**: Unfortunately, Windows and macOS builds of Calibre bundle a private Python runtime without a supported way to install third-party packages into it.
+- **Linux only:** Unfortunately, Windows and macOS builds of Calibre bundle a private Python runtime without a supported way to install third-party packages into it.
 - **Calibre 6+**
 - **`qpdf`** on `PATH` (for the **Optimize** tab)
-- **`calpdf` 0.2+ installed in Calibre's Python environment**: Do not install `calpdf` with `uv tool install` if you want to use this plugin. `uv tool install` isolates `calpdf` inside its own virtual environment where Calibre cannot import it. Install `calpdf` into the system Python that Calibre uses (on Arch Linux, install `calpdf-git` from the Forge repository).
+- **`calpdf` 0.2+ installed in Calibre's Python environment:** Do not install `calpdf` with `uv tool install` if you want to use this plugin. `uv tool install` isolates `calpdf` inside its own virtual environment where Calibre cannot import it. Install `calpdf` into the system Python that Calibre uses (on Arch Linux, install `calpdf-git` from the Forge repository).
 
 ## Installation
 
